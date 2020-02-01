@@ -1,25 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Route, Switch } from "react-router-dom";
+import ValidRoute from "./utils/routes/ValidRoute";
+import MediaQuery from "react-responsive";
+
+import Welcome from "./components/pages/WelcomePage";
+
+import TopNavBar from "./components/nav/TopNavBar";
+import MobileNavBar from "./components/nav/MobileNavBar";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <body>
+      <MediaQuery minDeviceWidth={768}>
+        <TopNavBar />
+      </MediaQuery>
+      <MediaQuery maxDeviceWidth={767}>
+        <MobileNavBar />
+      </MediaQuery>
+      <Switch>
+        <Route path="/" exact component={Welcome} />
+      </Switch>
+    </body>
   );
 }
 
