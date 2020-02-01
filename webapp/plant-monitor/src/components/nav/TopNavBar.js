@@ -23,28 +23,26 @@ function TopNavBar({ isAuthed, username, logout }) {
           height="60"
         />
       </Navbar.Brand>
-      <Nav
-        className="justify-content-center"
-        variant="tabs"
-        defaultActiveKey={window.location.pathname}
-      >
-        <Nav.Item>
-          <Nav.Link href="/">Home</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/leaderboard">Leaderboard</Nav.Link>
-        </Nav.Item>
-        {isAuthed ? (
+      {isAuthed ? (
+        <Nav
+          className="justify-content-center"
+          variant="tabs"
+          defaultActiveKey={window.location.pathname}
+        >
+          <Nav.Item>
+            <Nav.Link href="/">Home</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link href="/leaderboard">Leaderboard</Nav.Link>
+          </Nav.Item>
           <Nav.Item>
             <Nav.Link href="/newtime">Add a Time</Nav.Link>
           </Nav.Item>
-        ) : null}
-        {isAuthed ? (
           <Nav.Item>
             <Nav.Link href="/mytimes">My Times</Nav.Link>
           </Nav.Item>
-        ) : null}
-      </Nav>
+        </Nav>
+      ) : null}
       <Dropdown alignRight className="ml-auto">
         {isAuthed ? (
           <div>
