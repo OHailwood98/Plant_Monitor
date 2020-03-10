@@ -4,6 +4,11 @@ import ValidRoute from "./utils/routes/ValidRoute";
 import MediaQuery from "react-responsive";
 
 import Welcome from "./components/pages/WelcomePage";
+import Login from "./components/pages/LoginPage";
+import Signup from "./components/pages/SignupPage";
+import Invalid from "./components/pages/InvalidPage";
+import UpdatePassword from "./components/pages/UpdatePasswordPage";
+import Confirm from "./components/pages/ConfirmEmailPage";
 
 import TopNavBar from "./components/nav/TopNavBar";
 import MobileNavBar from "./components/nav/MobileNavBar";
@@ -19,6 +24,11 @@ function App() {
       </MediaQuery>
       <Switch>
         <Route path="/" exact component={Welcome} />
+        <Route path="/login" exact component={Login} />
+          <Route path="/signup" exact component={Signup} />
+          <ValidRoute path="/updatepassword" exact component={UpdatePassword} />
+          <Route path="/invalid" exact component={Invalid} />
+          <Route path="/confirmation/:token" exact component={Confirm}/>
       </Switch>
     </body>
   );

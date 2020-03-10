@@ -34,25 +34,6 @@ function MobileNavBar({ isAuthed, username, logout }) {
                 Home
               </Button>
             </Dropdown.Item>
-            <Dropdown.Item>
-              <Button as={Link} to="/leaderboard">
-                Leaderboard
-              </Button>
-            </Dropdown.Item>
-            {isAuthed ? (
-              <div>
-                <Dropdown.Item>
-                  <Button as={Link} to="/newtime">
-                    Add a Time
-                  </Button>
-                </Dropdown.Item>
-                <Dropdown.Item>
-                  <Button as={Link} to="/mytimes">
-                    My Times
-                  </Button>
-                </Dropdown.Item>
-              </div>
-            ) : null}
           </Dropdown.Menu>
         </Dropdown>
       </Nav>
