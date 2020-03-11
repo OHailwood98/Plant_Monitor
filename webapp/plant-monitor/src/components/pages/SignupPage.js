@@ -14,9 +14,11 @@ class SignupPage extends React.Component {
     return (
       <div>
         <CenterDiv>
+          <br/>
           <header>
-            <h2>Sign Up Here</h2>
+            <h2>Sign up Here</h2>
           </header>
+          <br/>
           <SignUpForm submit={this.submit} />
         </CenterDiv>
         

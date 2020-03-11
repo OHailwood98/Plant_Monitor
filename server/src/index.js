@@ -7,6 +7,7 @@ import Promise from "bluebird";
 import helmet from "helmet"
 
 import reading from "./routes/reading"
+import user from "./routes/user"
 
 dotenv.config(); 
 
@@ -19,6 +20,8 @@ mongoose.set("useUnifiedTopology", true);
 mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true });
 
 app.use("/api/reading", reading);
+
+app.use("/api/user", user);
 
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));

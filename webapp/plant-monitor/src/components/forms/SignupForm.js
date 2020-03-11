@@ -1,10 +1,25 @@
 import React from 'react'
 import Validator from 'validator'
 import PropTypes from 'prop-types'
-import {Alert, Button, Form, Row, Col} from 'react-bootstrap'
+import { Alert, Button, Form, Row, Col } from 'react-bootstrap'
 import Styled from "styled-components";
 
 import InlineError from '../messages/InlineError'
+
+const BorderDiv = Styled.div`
+display: inline-block;
+width:90%;
+border-style: solid;
+border-width: 3px;
+border-radius: 2px;
+padding: 25px;
+text-align: left;
+border-color: #28a745;
+`;
+
+const CenterDiv = Styled.div`
+text-align: center;
+`;
 
 class SignupForm extends React.Component{
     constructor(){
@@ -18,22 +33,24 @@ class SignupForm extends React.Component{
                 phone:"",
                 deviceID: "",
                 deviceName:"",
-                contact:{
-                    email:true,
-                    phone:false
-                }
+                contact: "email"
             },
             loading: false,
             error: {}
         }
         this.onChange = this.onChange.bind(this);
+        this.onContactChange = this.onContactChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
 
     onChange(event){
         const {name, value} = event.target
-        
-         this.setState({data: {...this.state.data, [name]: value}});
+        this.setState({data: {...this.state.data, [name]: value}});
+    }
+
+    onContactChange(event){
+        const {name} = event.target
+        this.setState({...this.state, data: {...this.state.data, contact: name}});
     }
 
     onSubmit(){
@@ -51,29 +68,34 @@ class SignupForm extends React.Component{
 
     validate(data){
         const errors = {};
-        if(!data.password) errors.password = "Please enter a password"
-        if(!(data.password === data.passwordCfrm)) errors.password = "Please make sure you passwords match"
+        var phoneExp = new RegExp("^07[0-9]{9}$")
+        var devExp = new RegExp("^[0-9]{2,4}$")
+        if(!data.password.trim()) errors.password = "Please enter a password"
+        if(!(data.password.trim() === data.passwordCfrm.trim())) errors.password = "Please make sure you passwords match"
         if(!Validator.isEmail(data.email)) errors.email = "Invalid Email"
-        if(!data.email) errors.email = "Please enter an email"
-        if(!data.username) errors.username = "Please enter an username"
+        if(!data.email.trim()) errors.email = "Please enter an email"
+        if(!data.username.trim()) errors.username = "Please enter an username"
+        if(!data.phone.trim()){ 
+            errors.phone = "Please enter an phone number"
+        }else{
+            if(!phoneExp.test(data.phone)) errors.phone = "Invalid phone number"
+        }
+        if(!data.deviceID.trim()){ 
+            errors.deviceID = "Please enter an device ID"
+        }else{
+            if(!devExp.test(data.deviceID)) errors.deviceID = "Invalid device ID"
+        }
+        if(!data.deviceName.trim()) errors.deviceName = "Please enter an name for you device"
+        
         return errors;
     }
-    
+
     render(){
-        const BorderDiv = Styled.div`
-            display: inline-block;
-            width:90%;
-            border-style: solid;
-            border-width: 3px;
-            border-radius: 2px;
-            padding: 25px;
-            text-align: left;
-        `;
-    
         const {data, error, loading} = this.state;
+        
         return(
             <Form loading={loading.toString()} onSubmit={e => this.onSubmit(e)}>
-                <BorderDiv style={{"border-color": "#28a745"}} >
+                <BorderDiv>
                 <h3>Your Info</h3>
                     <Row>
                         {error.global && (
@@ -123,7 +145,7 @@ class SignupForm extends React.Component{
                     </Col>
                     <Row>
                         <Col md={{ span: 4, offset: 4 }}>
-                            <Form.Label>Phone</Form.Label>
+                            <Form.Label>Mobile Phone NO.</Form.Label>
                             <Form.Control type="text" id="phone" name="phone" placeholder="07123456789" value={data.phone} onChange={this.onChange}/>
                             {error.phone && (
                                 <InlineError message={error.phone.toString()} />
@@ -138,6 +160,7 @@ class SignupForm extends React.Component{
                             <Form.Label>Device ID</Form.Label>
                             <Form.Control type="text" id="deviceID" name="deviceID" placeholder="21" value={data.deviceID} onChange={this.onChange}/>
                             <Form.Label>Written on the underside of your device</Form.Label>
+                            <br/>
                             {error.deviceID && (
                                 <InlineError message={error.deviceID.toString()} />
                             )}
@@ -146,8 +169,9 @@ class SignupForm extends React.Component{
                             <Form.Label>Device Name</Form.Label>
                             <Form.Control type="text" id="deviceName" name="deviceName" placeholder="Kitchen Herbs" value={data.deviceName} onChange={this.onChange}/>
                             <Form.Label>The name you will associate with this device</Form.Label>
-                            {error.deviceID && (
-                                <InlineError message={error.deviceID.toString()} />
+                            <br/>
+                            {error.deviceName && (
+                                <InlineError message={error.deviceName.toString()} />
                             )}
                         </Col>
                     </Row>
@@ -155,6 +179,21 @@ class SignupForm extends React.Component{
                     <hr/>
                     <h3>Contact Info</h3>
                     <Form.Label>How would you like the system to send you alerts?</Form.Label>
+                    <Row>
+                            <Col md={{ span: 1, offset: 4 }} onClick={() =>this.onContactChange({target:{name:"email"}})}>
+                                <CenterDiv>
+                                    <Form.Check type="radio" label="Email" id="email" checked={data.contact==="email"}/>
+                                </CenterDiv>
+                            </Col>
+                            <Col md={{ span: 1, offset: 2 }} onClick={() =>this.onContactChange({target:{name:"phone"}})}>
+                                <CenterDiv>
+                                    <Form.Check type="radio" label="Phone" id="phone" checked={data.contact==="phone"}/> 
+                                </CenterDiv>
+                            </Col>
+                    </Row>
+                    <br/>
+                    <hr/>
+                    <br/>
                     <Row>
                         <Col md={{ span: 4, offset: 4 }}>
                             <Button variant="primary" size="lg" block onClick={e => this.onSubmit(e)}>Sign Up!</Button>
