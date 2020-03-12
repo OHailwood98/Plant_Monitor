@@ -2,6 +2,7 @@ import express from "express";
 import decode from "jwt-decode";
 
 import User from "../models/user";
+import Device from "../models/device"
 import {sendConfirmEmail} from '../mailer'
 
 const router = express.Router();
@@ -9,6 +10,7 @@ const router = express.Router();
 router.post("/signup", (req, res) => {
   const { credentials } = req.body;
   console.log(credentials)
+
   const user = new User({
     email: credentials.email,
     username: credentials.username,
@@ -19,16 +21,25 @@ router.post("/signup", (req, res) => {
     user.contact.email = false;
     user.contact.phone = true;
   }
+
+  const device = new Device({
+    deviceID: credentials.deviceID,
+    deviceName: credentials.deviceName
+  })
   user.setPassword(credentials.password);
   user.setConfirmToken();
-  /**user
+  user
     .save()
     .then(user => {
-      sendConfirmEmail(user)
-      res.status(200).json({ user: user.toAuthJson() });
+      device.save()
+        .then(device =>{
+          sendConfirmEmail(user)
+          res.status(200).json({ user: user.toAuthJson() });
+        })
+        .catch(err => res.status(400).json({ errors: err.errors }));
     })
-    .catch(err => res.status(400).json({ errors: err.errors }));*/
-    res.status(400).json({errors: {global:"its fucked" }})
+    .catch(err => res.status(400).json({ errors: err.errors }));
+    //res.status(400).json({errors: {global:"its fucked" }})
 });
 
 router.post("/login", (req, res) => {
