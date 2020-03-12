@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 
-const sender = '"Brands Hatch Timer" <confirmation@BrandsHatch.com>'
+const sender = '"The Potted Plant Project" <confirmation@TPPP.com>'
 
 function setup(){
   return nodemailer.createTransport({
@@ -18,9 +18,9 @@ export function sendConfirmEmail(user){
     const email = {
         from: sender,
         to: user.email,
-        subject: "Brands Hatch Confirmation",
+        subject: "The Potted Plant Project Confirmation",
         text: `
-        Welcome to The Brands Hatch Track Timer, Please Confirm you Email.
+        Welcome to The Potted Plant Project, Please Confirm you Email.
         
         ${user.genConfirmUrl()}`
     }

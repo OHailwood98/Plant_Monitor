@@ -98,12 +98,14 @@ class SignupForm extends React.Component{
                 <BorderDiv>
                 <h3>Your Info</h3>
                     <Row>
-                        {error.global && (
-                            <Alert variant="danger">
-                                <Alert.Heading>Something Failed! :(</Alert.Heading>
-                                <p>{error.global}</p>
-                            </Alert>
-                        )}
+                        <Col md={{ span: 10, offset: 1 }}>
+                            {error.global && (
+                                <Alert variant="danger">
+                                    <Alert.Heading>Something Failed! :(</Alert.Heading>
+                                    <p>{error.global}</p>
+                                </Alert>
+                            )}
+                        </Col>
                         <Col md={{ span: 4, offset: 1 }}>
                             <Form.Label>Email</Form.Label>
                             <Form.Control type="text" id="email" name="email" placeholder="example@email.com" value={data.email} onChange={this.onChange}/>
@@ -126,14 +128,14 @@ class SignupForm extends React.Component{
                     <Row>
                         <Col md={{ span: 4, offset: 1 }}>
                             <Form.Label>Password</Form.Label>
-                            <Form.Control type="text" id="password" name="password" placeholder="password" value={data.password} onChange={this.onChange}/>
+                            <Form.Control type="password" id="password" name="password" placeholder="password" value={data.password} onChange={this.onChange}/>
                             {error.password && (
                                 <InlineError message={error.password.toString()} />
                             )}
                         </Col>
                         <Col md={{ span: 4, offset: 2 }}>
                             <Form.Label>Confirm Password</Form.Label>
-                            <Form.Control type="text" id="passwordCfrm" name="passwordCfrm" placeholder="password" value={data.passwordCfrm} onChange={this.onChange}/>
+                            <Form.Control type="password" id="passwordCfrm" name="passwordCfrm" placeholder="password" value={data.passwordCfrm} onChange={this.onChange}/>
                             {error.password && (
                                 <InlineError message={error.password.toString()} />
                             )}

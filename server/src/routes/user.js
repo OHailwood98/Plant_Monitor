@@ -9,12 +9,18 @@ const router = express.Router();
 router.post("/signup", (req, res) => {
   const { credentials } = req.body;
   console.log(credentials)
-  //const user = new User({
-  //  email: credentials.email,
-  //  username: credentials.username
-  //});
-  //user.setPassword(credentials.password);
-  //user.setConfirmToken();
+  const user = new User({
+    email: credentials.email,
+    username: credentials.username,
+    phone: credentials.phone,
+    devices:{devID:credentials.deviceID, name: credentials.deviceName},
+  });
+  if(credentials.contact === "phone"){
+    user.contact.email = false;
+    user.contact.phone = true;
+  }
+  user.setPassword(credentials.password);
+  user.setConfirmToken();
   /**user
     .save()
     .then(user => {
