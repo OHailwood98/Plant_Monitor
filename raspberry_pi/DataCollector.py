@@ -6,6 +6,7 @@ import dht11
 import spidev
 from numpy import interp
 import json
+import requests
 
 os.system('modprobe w1-gpio')
 os.system('modprobe w1-therm')
@@ -18,9 +19,11 @@ base_dir = '/sys/bus/w1/devices/'
 device_folder = glob.glob(base_dir + '28*')[0]
 device_file = device_folder + '/w1_slave'
 
-instance = dht11.DHT11(pin=6)
+#instance = dht11.DHT11(pin=6)
 spi = spidev.SpiDev()
 spi.open(0,0)
+
+dataUrl = "http://192.168.0.36:8080/api/reading/add"
  
 def read_temp_raw():
   f = open(device_file, 'r')
@@ -40,12 +43,12 @@ def read_temp():
   if equals_pos != -1:
     temp_string = lines[1][equals_pos+2:]
     temp_c = float(temp_string) / 1000.0
-    return "%0.2f" % temp_c
+    return "%0.0f" % temp_c
 
-def read_humid():
-  result = instance.read()
-  if result.is_valid():
-    return "%0.1f" % result.humidity
+#def read_humid():
+#  result = instance.read()
+#  if result.is_valid():
+#    return "%0.0f" % result.humidity
 
 def read_analog(channel):
   spi.max_speed_hz = 1350000
@@ -59,14 +62,20 @@ while True:
   temp = read_temp()
   #humid = read_humid()
   light = interp(read_analog(0), [0,1023], [0,100])
-  light = "%0.1f" % light
+  light = "%0.0f" % light
+  moisture = interp(read_analog(2), [0,1023], [100,10])
+  moisture = "%0.0f" % moisture
   data = {
-    "deviceID" : "47",
-    "time" : timeSTR,
-    "temp" : temp,
-    #"humidity" : humid,
-    "light" : light
+    "data":{
+      "deviceID" : "47",
+      "time" : timeSTR,
+      "temp" : temp,
+      #"humidity" : humid,
+      "light" : light,
+      "moisture" : moisture
+      }
     }
   datSTR = json.dumps(data)
   print(datSTR)
-  time.sleep(2)
+  requests.post(url=dataUrl, json=data)
+  time.sleep(300)
