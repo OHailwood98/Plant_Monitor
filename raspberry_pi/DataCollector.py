@@ -57,14 +57,14 @@ while True:
   now = time.localtime()
   timeSTR = time.strftime("%H:%M",now)
   temp = read_temp()
-  humid = read_humid()
+  #humid = read_humid()
   light = interp(read_analog(0), [0,1023], [0,100])
   light = "%0.1f" % light
   data = {
     "deviceID" : "47",
     "time" : timeSTR,
     "temp" : temp,
-    "humidity" : humid,
+    #"humidity" : humid,
     "light" : light
     }
   datSTR = json.dumps(data)
