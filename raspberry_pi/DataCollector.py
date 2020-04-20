@@ -5,7 +5,6 @@ import RPi.GPIO as GPIO
 import spidev
 from numpy import interp
 import json
-import requests
 
 os.system('modprobe w1-gpio')
 os.system('modprobe w1-therm')
@@ -18,10 +17,16 @@ base_dir = '/sys/bus/w1/devices/'
 device_folder = glob.glob(base_dir + '28*')[0]
 device_file = device_folder + '/w1_slave'
 
+<<<<<<< HEAD
 spi = spidev.SpiDev()
 spi.open(0,0)
 
 dataUrl = "https://fyp-plant-monitor.herokuapp.com/api/reading/add"
+=======
+instance = dht11.DHT11(pin=6)
+spi = spidev.SpiDev()
+spi.open(0,0)
+>>>>>>> parent of a99a45e... add flask server to control a pump
  
 def read_temp_raw():
   f = open(device_file, 'r')
@@ -41,7 +46,16 @@ def read_temp():
   if equals_pos != -1:
     temp_string = lines[1][equals_pos+2:]
     temp_c = float(temp_string) / 1000.0
+<<<<<<< HEAD
     return temp_c
+=======
+    return "%0.2f" % temp_c
+
+def read_humid():
+  result = instance.read()
+  if result.is_valid():
+    return "%0.1f" % result.humidity
+>>>>>>> parent of a99a45e... add flask server to control a pump
 
 def read_analog(channel):
   spi.max_speed_hz = 1350000
@@ -67,6 +81,7 @@ while True:
   
   now = time.localtime()
   timeSTR = time.strftime("%H:%M",now)
+<<<<<<< HEAD
 <<<<<<< HEAD
   temp = (temp1+temp2+temp3)/3
   light = (light1+light2+light3)/3
@@ -100,3 +115,19 @@ while True:
   print(datSTR)
   requests.post(url=dataUrl, json=data)
   time.sleep(840)
+=======
+  temp = read_temp()
+  #humid = read_humid()
+  light = interp(read_analog(0), [0,1023], [0,100])
+  light = "%0.1f" % light
+  data = {
+    "deviceID" : "47",
+    "time" : timeSTR,
+    "temp" : temp,
+    #"humidity" : humid,
+    "light" : light
+    }
+  datSTR = json.dumps(data)
+  print(datSTR)
+  time.sleep(2)
+>>>>>>> parent of a99a45e... add flask server to control a pump
