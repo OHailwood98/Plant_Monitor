@@ -24,6 +24,7 @@ device_file = device_folder + '/w1_slave'
 spi = spidev.SpiDev()
 spi.open(0,0)
 
+<<<<<<< HEAD
 dataUrl = "https://fyp-plant-monitor.herokuapp.com/api/reading/add"
 =======
 instance = dht11.DHT11(pin=6)
@@ -44,6 +45,9 @@ spi.open(0,0)
 
 dataUrl = "http://192.168.0.36:8080/api/reading/add"
 >>>>>>> parent of 2771134... update dataURL to match heroku URL
+=======
+dataUrl = " https://fyp-plant-monitor.herokuapp.com/api/reading/add"
+>>>>>>> parent of 77ee9b7... add start script and ngrok
  
 def read_temp_raw():
   f = open(device_file, 'r')
@@ -64,6 +68,7 @@ def read_temp():
     temp_string = lines[1][equals_pos+2:]
     temp_c = float(temp_string) / 1000.0
 <<<<<<< HEAD
+<<<<<<< HEAD
     return temp_c
 =======
     return "%0.2f" % temp_c
@@ -83,6 +88,9 @@ def read_humid():
 #  result = instance.read()
 #  if result.is_valid():
 #    return "%0.0f" % result.humidity
+=======
+    return "%0.0f" % temp_c
+>>>>>>> parent of 77ee9b7... add start script and ngrok
 
 def read_analog(channel):
   spi.max_speed_hz = 1350000
@@ -94,19 +102,33 @@ while True:
 <<<<<<< HEAD
 <<<<<<< HEAD
   
-  temp1 = float(read_temp())
+  temp1 = read_temp()
   light1 = interp(read_analog(0), [0,1023], [0,100])
+  light1 = "%0.0f" % light
   moisture1 = interp(read_analog(2), [0,1023], [100,10])
+<<<<<<< HEAD
   time.sleep(30)
+=======
+  moisture1 = "%0.0f" % moisture
+  time.sleep(300)
+>>>>>>> parent of 77ee9b7... add start script and ngrok
   
-  temp2 = float(read_temp())
+  temp2 = read_temp()
   light2 = interp(read_analog(0), [0,1023], [0,100])
+  light2 = "%0.0f" % light
   moisture2 = interp(read_analog(2), [0,1023], [100,10])
+<<<<<<< HEAD
   time.sleep(30)
+=======
+  moisture2 = "%0.0f" % moisture
+  time.sleep(300)
+>>>>>>> parent of 77ee9b7... add start script and ngrok
 
-  temp3 = float(read_temp())
+  temp3 = read_temp()
   light3 = interp(read_analog(0), [0,1023], [0,100])
+  light3 = "%0.0f" % light
   moisture3 = interp(read_analog(2), [0,1023], [100,10])
+  moisture3 = "%0.0f" % moisture
   
   now = time.localtime()
   timeSTR = time.strftime("%H:%M",now)
@@ -115,6 +137,7 @@ while True:
   temp = (temp1+temp2+temp3)/3
   light = (light1+light2+light3)/3
   moisture = (moisture1+moisture2+moisture3)/3
+<<<<<<< HEAD
   
   temp = "%0.01f" % temp
   light = "%0.0f" % light
@@ -135,6 +158,8 @@ while True:
 =======
 >>>>>>> parent of 2771134... update dataURL to match heroku URL
   moisture = "%0.0f" % moisture
+=======
+>>>>>>> parent of 77ee9b7... add start script and ngrok
   data = {
     "data":{
       "deviceID" : "47",
