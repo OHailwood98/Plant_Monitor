@@ -2,6 +2,7 @@ import os
 import glob
 import time
 import RPi.GPIO as GPIO
+import dht11
 import spidev
 from numpy import interp
 import json
@@ -18,6 +19,7 @@ device_folder = glob.glob(base_dir + '28*')[0]
 device_file = device_folder + '/w1_slave'
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 spi = spidev.SpiDev()
 spi.open(0,0)
 
@@ -27,6 +29,13 @@ instance = dht11.DHT11(pin=6)
 spi = spidev.SpiDev()
 spi.open(0,0)
 >>>>>>> parent of a99a45e... add flask server to control a pump
+=======
+#instance = dht11.DHT11(pin=6)
+spi = spidev.SpiDev()
+spi.open(0,0)
+
+dataUrl = "http://192.168.0.36:8080/api/reading/add"
+>>>>>>> parent of 2771134... update dataURL to match heroku URL
  
 def read_temp_raw():
   f = open(device_file, 'r')
@@ -57,6 +66,11 @@ def read_humid():
     return "%0.1f" % result.humidity
 >>>>>>> parent of a99a45e... add flask server to control a pump
 
+#def read_humid():
+#  result = instance.read()
+#  if result.is_valid():
+#    return "%0.0f" % result.humidity
+
 def read_analog(channel):
   spi.max_speed_hz = 1350000
   adc = spi.xfer2([1,(8+channel) <<4, 0])
@@ -64,6 +78,7 @@ def read_analog(channel):
   return data
 
 while True:
+<<<<<<< HEAD
   
   temp1 = float(read_temp())
   light1 = interp(read_analog(0), [0,1023], [0,100])
@@ -89,12 +104,22 @@ while True:
   
   temp = "%0.01f" % temp
   light = "%0.0f" % light
+=======
+  now = time.localtime()
+  timeSTR = time.strftime("%H:%M",now)
+  temp = read_temp()
+  #humid = read_humid()
+  light = interp(read_analog(0), [0,1023], [0,100])
+  light = "%0.0f" % light
+  moisture = interp(read_analog(2), [0,1023], [100,10])
+>>>>>>> parent of 2771134... update dataURL to match heroku URL
   moisture = "%0.0f" % moisture
   data = {
     "data":{
       "deviceID" : "47",
       "time" : timeSTR,
       "temp" : temp,
+      #"humidity" : humid,
       "light" : light,
       "moisture" : moisture
       }
