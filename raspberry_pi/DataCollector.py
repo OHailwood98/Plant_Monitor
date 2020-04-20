@@ -67,6 +67,7 @@ while True:
   
   now = time.localtime()
   timeSTR = time.strftime("%H:%M",now)
+<<<<<<< HEAD
   temp = (temp1+temp2+temp3)/3
   light = (light1+light2+light3)/3
   moisture = (moisture1+moisture2+moisture3)/3
@@ -82,6 +83,18 @@ while True:
       "light" : light,
       "moisture" : moisture
       }
+=======
+  temp = read_temp()
+  humid = read_humid()
+  light = interp(read_analog(0), [0,1023], [0,100])
+  light = "%0.1f" % light
+  data = {
+    "deviceID" : "47",
+    "time" : timeSTR,
+    "temp" : temp,
+    "humidity" : humid,
+    "light" : light
+>>>>>>> parent of 7694029... remove moisture sensor (DHT11)
     }
   datSTR = json.dumps(data)
   print(datSTR)
