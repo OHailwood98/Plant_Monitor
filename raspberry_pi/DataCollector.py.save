@@ -54,12 +54,12 @@ while True:
   temp1 = float(read_temp())
   light1 = interp(read_analog(0), [0,1023], [0,100])
   moisture1 = interp(read_analog(2), [0,1023], [100,10])
-  time.sleep(30)
+  time.sleep(3)
   
   temp2 = float(read_temp())
   light2 = interp(read_analog(0), [0,1023], [0,100])
   moisture2 = interp(read_analog(2), [0,1023], [100,10])
-  time.sleep(30)
+  time.sleep(3)
 
   temp3 = float(read_temp())
   light3 = interp(read_analog(0), [0,1023], [0,100])
@@ -86,4 +86,4 @@ while True:
   datSTR = json.dumps(data)
   print(datSTR)
   requests.post(url=dataUrl, json=data)
-  time.sleep(840)
+  time.sleep(30)
