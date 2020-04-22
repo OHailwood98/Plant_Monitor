@@ -61,7 +61,8 @@ class SignupForm extends React.Component{
             this.props
             .submit(this.state.data)
             .catch(err => {
-                return (this.setState({error:err.response.data.errors, loading:false}))
+                console.dir(err.response.data.errors)
+                return (this.setState({...this.state, error:err.response.data.errors, loading:false}))
             })
         }
     }
@@ -70,22 +71,22 @@ class SignupForm extends React.Component{
         const errors = {};
         var phoneExp = new RegExp("^07[0-9]{9}$")
         var devExp = new RegExp("^[0-9]{2,4}$")
-        if(!data.password.trim()) errors.password = "Please enter a password"
-        if(!(data.password.trim() === data.passwordCfrm.trim())) errors.password = "Please make sure you passwords match"
-        if(!Validator.isEmail(data.email)) errors.email = "Invalid Email"
-        if(!data.email.trim()) errors.email = "Please enter an email"
-        if(!data.username.trim()) errors.username = "Please enter an username"
+        if(!data.password.trim()) errors.password = {message:"Please enter a password"}
+        if(!(data.password.trim() === data.passwordCfrm.trim())) errors.password = {message:"Please make sure you passwords match"}
+        if(!Validator.isEmail(data.email)) errors.email = {message:"Invalid Email"}
+        if(!data.email.trim()) errors.email = {message:"Please enter an email"}
+        if(!data.username.trim()) errors.username = {message:"Please enter an username"}
         if(!data.phone.trim()){ 
-            errors.phone = "Please enter an phone number"
+            errors.phone = {message:"Please enter an phone number"}
         }else{
-            if(!phoneExp.test(data.phone)) errors.phone = "Invalid phone number"
+            if(!phoneExp.test(data.phone)) errors.phone = {message:"Invalid phone number"}
         }
         if(!data.deviceID.trim()){ 
-            errors.deviceID = "Please enter an device ID"
+            errors.deviceID = {message:"Please enter an device ID"}
         }else{
-            if(!devExp.test(data.deviceID)) errors.deviceID = "Invalid device ID"
+            if(!devExp.test(data.deviceID)) errors.deviceID = {message:"Invalid device ID"}
         }
-        if(!data.deviceName.trim()) errors.deviceName = "Please enter an name for you device"
+        if(!data.deviceName.trim()) errors.deviceName = {message:"Please enter an name for you device"}
         
         return errors;
     }
@@ -110,14 +111,14 @@ class SignupForm extends React.Component{
                             <Form.Label>Email</Form.Label>
                             <Form.Control type="text" id="email" name="email" placeholder="example@email.com" value={data.email} onChange={this.onChange}/>
                             {error.email && (
-                                <InlineError message={error.email.toString()} />
+                                <InlineError message={error.email.message} />
                             )}
                         </Col>
                         <Col md={{ span: 4, offset: 2 }}>
                             <Form.Label>Username</Form.Label>
                             <Form.Control type="text" id="username" name="username" placeholder="username" value={data.username} onChange={this.onChange}/>
                             {error.username && (
-                                <InlineError message={error.username.toString()} />
+                                <InlineError message={error.username.message} />
                             )}
                         </Col>
                     </Row>
@@ -130,14 +131,14 @@ class SignupForm extends React.Component{
                             <Form.Label>Password</Form.Label>
                             <Form.Control type="password" id="password" name="password" placeholder="password" value={data.password} onChange={this.onChange}/>
                             {error.password && (
-                                <InlineError message={error.password.toString()} />
+                                <InlineError message={error.password.message} />
                             )}
                         </Col>
                         <Col md={{ span: 4, offset: 2 }}>
                             <Form.Label>Confirm Password</Form.Label>
                             <Form.Control type="password" id="passwordCfrm" name="passwordCfrm" placeholder="password" value={data.passwordCfrm} onChange={this.onChange}/>
                             {error.password && (
-                                <InlineError message={error.password.toString()} />
+                                <InlineError message={error.password.message} />
                             )}
                         </Col>
                     </Row>
@@ -150,7 +151,7 @@ class SignupForm extends React.Component{
                             <Form.Label>Mobile Phone NO.</Form.Label>
                             <Form.Control type="text" id="phone" name="phone" placeholder="07123456789" value={data.phone} onChange={this.onChange}/>
                             {error.phone && (
-                                <InlineError message={error.phone.toString()} />
+                                <InlineError message={error.phone.message} />
                             )}
                         </Col>
                     </Row>
@@ -164,7 +165,7 @@ class SignupForm extends React.Component{
                             <Form.Label>Written on the underside of your device</Form.Label>
                             <br/>
                             {error.deviceID && (
-                                <InlineError message={error.deviceID.toString()} />
+                                <InlineError message={error.deviceID.message} />
                             )}
                         </Col>
                         <Col md={{ span: 4, offset: 2 }}>
@@ -173,7 +174,7 @@ class SignupForm extends React.Component{
                             <Form.Label>The name you will associate with this device</Form.Label>
                             <br/>
                             {error.deviceName && (
-                                <InlineError message={error.deviceName.toString()} />
+                                <InlineError message={error.deviceName.message} />
                             )}
                         </Col>
                     </Row>

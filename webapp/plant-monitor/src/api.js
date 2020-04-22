@@ -13,6 +13,9 @@ export default {
         .post("/api/user/updatepassword", { credentials })
         .then(res => res.data.user),
     confirm: token =>
-      axios.post("/api/user/confirm", { token }).then(res => res.data.user)
+      axios.post("/api/user/confirm", { token }).then(res => res.data.user),
+    getDevices: () => 
+      axios.get("/api/user/getdevices")
+      .then(res => res.data.devices)
   }
 };
