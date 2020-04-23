@@ -9,8 +9,7 @@ class MyDevicesPage extends React.Component {
         super()
         this.state = {
             devices:[],
-            loading:true,
-            chosenDevice: ""
+            loading:true
         }
     }
 

@@ -17,5 +17,9 @@ export default {
     getDevices: () => 
       axios.get("/api/user/getdevices")
       .then(res => res.data.devices)
+  },
+  device:{
+    deviceInfo: id =>
+      axios.post("api/device/deviceinfo", {id}).then(res  => res.data.device)
   }
 };
