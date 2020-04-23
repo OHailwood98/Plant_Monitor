@@ -16,6 +16,7 @@ class MyDevicesPage extends React.Component {
     componentDidMount(){
         api.user.getDevices()
             .then(devices =>{
+                console.log(devices)
                 this.setState({...this.state, devices:devices, loading: false})
             })
     }

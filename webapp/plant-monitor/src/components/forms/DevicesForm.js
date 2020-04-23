@@ -3,15 +3,16 @@ import Styled from "styled-components";
 import { Alert, Form, Col, Row } from "react-bootstrap";
 
 import api from "../../api"
+import DeviceInfoForm from "../forms/DeviceInfoForm"
 
 class DeviceForm extends React.Component{
 
     constructor(props){
-        super()
+        super(props)
         this.state = {
             devices: props.devices,
             loading:true,
-            chosenDevice: props.devices[0].devID,
+            chosenDevice:"",
             error:{}
         }
         this.onChange = this.onChange.bind(this);
@@ -21,7 +22,6 @@ class DeviceForm extends React.Component{
     onChange(event){
         const {name, value} = event.target
         this.setState({...this.state, [name]: value});
-        console.log(value)
         this.getDeviceInfo(value)
     }
 
@@ -35,11 +35,12 @@ class DeviceForm extends React.Component{
             this.setState({...this.state, deviceInfo: device, loading: false})
         })
         .catch(err => {
-            this.setState({...this.state, error:err.response.data.errors, loading:"false"});
+            this.setState({...this.state, error:err.response.data.errors, loading:false});
         }) 
     }
 
     render(){
+        const {devices, loading, chosenDevice, deviceInfo, error} = this.state;
         const BorderDiv = Styled.div`
             display: inline-block;
             width:90%;
@@ -47,12 +48,11 @@ class DeviceForm extends React.Component{
             border-width: 3px;
             border-radius: 2px;
             padding: 25px;
-            text-align: left;
             border-color: #28a745;
         `;
 
-        let deviceList = this.state.devices.map(dev =>(
-            <option value={dev.devID}>{dev.name}</option>
+        let deviceList = devices.map(dev =>(
+            <option key={dev.devID} value={dev.devID}>{dev.name}</option>
         ))
 
         return(
@@ -60,22 +60,27 @@ class DeviceForm extends React.Component{
                 <Form>
                     <Row>
                         <Col md={{ span: 10, offset: 1 }}>
-                            {this.state.error.global && (
+                            {error.global && (
                                 <Alert variant="danger">
                                     <Alert.Heading>Something Failed! :(</Alert.Heading>
-                                    <p>{this.state.error.global}</p>
+                                    <p>{error.global}</p>
                                 </Alert>
                             )}
                         </Col>
                         <Col md={{ span: 2, offset: 0 }}>
                             <Form.Group>
-                                <Form.Control as="select" id="chosenDevice" name="chosenDevice" value={this.state.chosenDevice} onChange={this.onChange}>
+                                <Form.Control as="select" id="chosenDevice" name="chosenDevice" value={chosenDevice} onChange={this.onChange}>
                                     {deviceList}
                                 </Form.Control>
                             </Form.Group>
                         </Col>
                     </Row>
                 </Form>
+                <br/>
+                {!loading ?
+                    (<DeviceInfoForm device={deviceInfo}/>):
+                    (<BorderDiv><h3>Device Information Failed to load</h3></BorderDiv>)
+                }
             </BorderDiv>
         )
     }
