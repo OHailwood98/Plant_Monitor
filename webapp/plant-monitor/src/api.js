@@ -20,6 +20,10 @@ export default {
   },
   device:{
     deviceInfo: id =>
-      axios.post("api/device/deviceinfo", {id}).then(res  => res.data.device)
+      axios.post("api/device/deviceinfo", {id}).then(res  => res.data.device),
+    editDevice: device =>
+      axios.post("api/device/editdevice", {device}).then(res  => res.data),
+    addDevice: device =>
+      axios.post("api/device/adddevice", {device}).then(res  => res.data),
   }
 };

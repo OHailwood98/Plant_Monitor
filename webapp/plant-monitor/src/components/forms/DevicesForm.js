@@ -4,6 +4,8 @@ import { Alert, Form, Col, Row } from "react-bootstrap";
 
 import api from "../../api"
 import DeviceInfoForm from "../forms/DeviceInfoForm"
+import newDeviceForm from "../forms/NewDeviceForm"
+import NewDeviceForm from "../forms/NewDeviceForm";
 
 class DeviceForm extends React.Component{
 
@@ -78,7 +80,13 @@ class DeviceForm extends React.Component{
                 </Form>
                 <br/>
                 {!loading ?
-                    (<DeviceInfoForm device={deviceInfo}/>):
+                    (
+                    <div>
+                        <DeviceInfoForm device={deviceInfo}/>
+                        <br/>
+                        <br/>
+                        <NewDeviceForm/>
+                    </div>):
                     (<BorderDiv><h3>Device Information Failed to load</h3></BorderDiv>)
                 }
             </BorderDiv>

@@ -3,6 +3,7 @@ import Styled from "styled-components";
 import { Alert, Button, Form, Col, Row } from "react-bootstrap";
 
 import InlineError from "../messages/InlineError"
+import api from "../../api"
 
 const BorderDiv = Styled.div`
     display: inline-block;
@@ -49,7 +50,13 @@ class DeviceInfoForm extends React.Component{
         const errors = this.validate(this.state.device);
         this.setState({error:errors});
         if(Object.keys(errors).length ===0){
-
+            api.device.editDevice(this.state.device)
+                .then(() =>{
+                    window.location.reload(true)
+                })
+                .catch(err =>{
+                    this.setState({...this.state, error:err.response.data.errors})
+                })
         }
     }
 
@@ -135,7 +142,7 @@ class DeviceInfoForm extends React.Component{
                     <br/>
                     <Row>
                         <Col md={{ span: 4, offset: 1 }}>
-                            <Form.Label>Minimum Temperature</Form.Label>
+                            <Form.Label>Minimum</Form.Label>
                             <Form.Control type="text" id="tempMin" name="tempMin" placeholder="Degrees C" 
                                 value={device.tempMin} onChange={this.onChange} readOnly={readOnly}/>
                             {error.tempMin && (
@@ -143,7 +150,7 @@ class DeviceInfoForm extends React.Component{
                             )}
                         </Col>
                         <Col md={{ span: 4, offset: 2 }}>
-                            <Form.Label>Maximum Temperature</Form.Label>
+                            <Form.Label>Maximum</Form.Label>
                             <Form.Control type="text" id="tempMax" name="tempMax" placeholder="Degrees C" 
                                 value={device.tempMax} onChange={this.onChange} readOnly={readOnly}/>
                             {error.tempMax && (
@@ -158,7 +165,7 @@ class DeviceInfoForm extends React.Component{
                     <br/>
                     <Row>
                         <Col md={{ span: 4, offset: 1 }}>
-                            <Form.Label>Minimum Moisture</Form.Label>
+                            <Form.Label>Minimum</Form.Label>
                             <Form.Control type="text" id="moistMin" name="moistMin" placeholder="5-90" 
                                 value={device.moistMin} onChange={this.onChange} readOnly={readOnly}/>
                             {error.moistMin && (
@@ -166,7 +173,7 @@ class DeviceInfoForm extends React.Component{
                             )}
                         </Col>
                         <Col md={{ span: 4, offset: 2 }}>
-                            <Form.Label>Maximum Moisture</Form.Label>
+                            <Form.Label>Maximum</Form.Label>
                             <Form.Control type="text" id="moistMax" name="moistMax" placeholder="5-90" 
                                 value={device.moistMax} onChange={this.onChange} readOnly={readOnly}/>
                             {error.moistMax && (
