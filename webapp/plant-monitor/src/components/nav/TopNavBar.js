@@ -31,6 +31,9 @@ function TopNavBar({ isAuthed, username, logout }) {
         <Nav.Item>
           <Nav.Link href="/">Home</Nav.Link>
         </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href="/mydevices">My Devices</Nav.Link>
+        </Nav.Item>
       </Nav>
       {isAuthed ? (null) : null}
       <Dropdown alignRight className="ml-auto">
