@@ -9,6 +9,7 @@ import Invalid from "./components/pages/InvalidPage";
 import UpdatePassword from "./components/pages/UpdatePasswordPage";
 import Confirm from "./components/pages/ConfirmEmailPage";
 import MyDevices from "./components/pages/MyDevicesPage"
+import Readings from "./components/pages/ReadingPage"
 
 import TopNavBar from "./components/nav/TopNavBar";
 
@@ -24,6 +25,7 @@ function App() {
         <Route path="/invalid" exact component={Invalid} />
         <Route path="/confirmation/:token" exact component={Confirm}/>
         <ValidRoute path="/mydevices" exact component={MyDevices} />
+        <ValidRoute path="/readings" exact component={Readings} />
       </Switch>
     </body>
   );

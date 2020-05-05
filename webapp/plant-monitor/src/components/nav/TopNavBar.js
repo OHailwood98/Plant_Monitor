@@ -31,11 +31,12 @@ function TopNavBar({ isAuthed, username, logout }) {
         <Nav.Item>
           <Nav.Link href="/">Home</Nav.Link>
         </Nav.Item>
-        <Nav.Item>
+        {isAuthed ? 
+        (<Nav.Item>
           <Nav.Link href="/mydevices">My Devices</Nav.Link>
-        </Nav.Item>
+        </Nav.Item>)
+        :(null)}
       </Nav>
-      {isAuthed ? (null) : null}
       <Dropdown alignRight className="ml-auto">
         {isAuthed ? (
           <div>
