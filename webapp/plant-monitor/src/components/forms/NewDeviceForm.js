@@ -131,7 +131,7 @@ class NewDeviceForm extends React.Component{
                         </Row>
                         <Row>
                             <Col md={{ span: 4, offset: 1 }}>
-                                <Form.Label>newDevice ID</Form.Label>
+                                <Form.Label>New Device ID</Form.Label>
                                 <Form.Control type="text" id="deviceID" name="deviceID" placeholder="21" 
                                     value={newDevice.deviceID} onChange={this.onChange} />
                                 {error.deviceID && (
@@ -139,7 +139,7 @@ class NewDeviceForm extends React.Component{
                                 )}
                             </Col>
                             <Col md={{ span: 4, offset: 2 }}>
-                                <Form.Label>newDevice Name</Form.Label>
+                                <Form.Label>New Device Name</Form.Label>
                                 <Form.Control type="text" id="deviceName" name="deviceName" placeholder="Kitchen Herbs" 
                                     value={newDevice.deviceName} onChange={this.onChange}/>
                                 {error.deviceName && (

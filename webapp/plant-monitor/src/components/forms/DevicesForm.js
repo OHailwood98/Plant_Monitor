@@ -4,7 +4,6 @@ import { Alert, Form, Col, Row } from "react-bootstrap";
 
 import api from "../../api"
 import DeviceInfoForm from "../forms/DeviceInfoForm"
-import newDeviceForm from "../forms/NewDeviceForm"
 import NewDeviceForm from "../forms/NewDeviceForm";
 
 class DeviceForm extends React.Component{
@@ -14,7 +13,7 @@ class DeviceForm extends React.Component{
         this.state = {
             devices: props.devices,
             loading:true,
-            chosenDevice:"",
+            chosenDevice:props.devices[0].devID,
             error:{}
         }
         this.onChange = this.onChange.bind(this);
@@ -28,7 +27,7 @@ class DeviceForm extends React.Component{
     }
 
     componentDidMount(){
-        this.getDeviceInfo(this.state.devices[0].devID)
+        this.getDeviceInfo(this.state.chosenDevice)
     }
 
     getDeviceInfo(id){

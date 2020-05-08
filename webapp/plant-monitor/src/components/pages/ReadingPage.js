@@ -2,6 +2,7 @@ import React from "react";
 import Styled from "styled-components";
 
 import api from "../../api"
+import ReadingForm from "../forms/ReadingForm"
 
 const CenterDiv = Styled.div`
 text-align: center;
@@ -32,7 +33,7 @@ class ReadingPage extends React.Component{
                 <h2>Readings</h2>
                 <br/>
                 <br/>
-                {!loading ? (<h4>HI</h4>): null}
+                {!loading ? (<ReadingForm devices={devices}/>): null}
             </CenterDiv>
         )
     }

@@ -25,5 +25,13 @@ export default {
       axios.post("api/device/editdevice", {device}).then(res  => res.data),
     addDevice: device =>
       axios.post("api/device/adddevice", {device}).then(res  => res.data),
+  },
+  reading:{
+    getOneDay: id =>
+      axios.post("api/reading/getoneday", {id}).then(res  => res.data.timeList),
+    getOneWeek: id =>
+      axios.post("api/reading/getoneweek", {id}).then(res  => res.data.timeList),
+    getOneMonth: id =>
+      axios.post("api/reading/getonemonth", {id}).then(res  => res.data.timeList),
   }
 };
