@@ -3,10 +3,11 @@ import Styled from "styled-components";
 import { Alert, Form, Col, Row } from "react-bootstrap";
 
 import api from "../../api"
+import ReadingDisplayForm from "../forms/ReadingDisplayForm"
 
 const BorderDiv = Styled.div`
     display: inline-block;
-    width:95%;
+    width:98%;
     border-style: solid;
     border-width: 3px;
     border-radius: 2px;
@@ -78,7 +79,7 @@ class ReadingForm extends React.Component{
     }
 
     render(){
-        const {devices, loading, chosenDevice, deviceInfo, chosenPeriod, error} = this.state;
+        const {devices, loading, chosenDevice, chosenPeriod, readings, error} = this.state;
 
         let deviceList = devices.map(dev =>(
             <option key={dev.devID} value={dev.devID}>{dev.name}</option>
@@ -116,6 +117,10 @@ class ReadingForm extends React.Component{
                         </Col>
                     </Row>
                 </Form>
+                {!loading ?
+                (<ReadingDisplayForm readings={readings.slice(0,4)}/>):
+                (<h3>loading</h3>)
+                }
             </BorderDiv>
         )
     }
