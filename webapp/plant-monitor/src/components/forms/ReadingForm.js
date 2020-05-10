@@ -23,7 +23,7 @@ class ReadingForm extends React.Component{
             readings:{},
             loading:true,
             chosenDevice:props.devices[0].devID,
-            chosenPeriod:0,
+            chosenPeriod:"0",
             error:{}
         }
         this.onChange = this.onChange.bind(this);
@@ -31,15 +31,15 @@ class ReadingForm extends React.Component{
     }
 
     onChange(event){
-        console.log("hi")
         const {name, value} = event.target
         this.setState({...this.state, [name]: value});
+        this.getReadings(value, this.state.chosenPeriod)
     }
 
     onPeriodChange(event){
         const {name, value} = event.target
         this.setState({...this.state, [name]: value, loading:true});
-        this.getReadings(this.state.devices[0].devID, value)
+        this.getReadings(this.state.chosenDevice, value)
     }
 
     componentDidMount(){
@@ -47,12 +47,11 @@ class ReadingForm extends React.Component{
     }
 
     getReadings(id, period){
-        console.log(period)
         switch(period){
             case "0":
                 api.reading.getOneDay(id)
                 .then(timeList =>{
-                    this.setState({...this.state, readings: timeList, loading:false})
+                    this.setState({...this.state, readings: timeList, loading:false, error: {}})
                 })
                 .catch(err => {
                     this.setState({...this.state, error:err.response.data.errors, loading:false});
@@ -61,7 +60,7 @@ class ReadingForm extends React.Component{
             case "1":
                 api.reading.getOneWeek(id)
                 .then(timeList =>{
-                    this.setState({...this.state, readings: timeList, loading:false})
+                    this.setState({...this.state, readings: timeList, loading:false, error: {}})
                 })
                 .catch(err => {
                     this.setState({...this.state, error:err.response.data.errors, loading:false});
@@ -70,7 +69,7 @@ class ReadingForm extends React.Component{
             default:
                 api.reading.getOneMonth(id)
                 .then(timeList =>{
-                    this.setState({...this.state, readings: timeList, loading:false})
+                    this.setState({...this.state, readings: timeList, loading:false, error: {}})
                 })
                 .catch(err => {
                     this.setState({...this.state, error:err.response.data.errors, loading:false});
@@ -80,7 +79,6 @@ class ReadingForm extends React.Component{
 
     render(){
         const {devices, loading, chosenDevice, chosenPeriod, readings, error} = this.state;
-
         let deviceList = devices.map(dev =>(
             <option key={dev.devID} value={dev.devID}>{dev.name}</option>
         ))
@@ -117,8 +115,8 @@ class ReadingForm extends React.Component{
                         </Col>
                     </Row>
                 </Form>
-                {!loading ?
-                (<ReadingDisplayForm readings={readings.slice(0,4)}/>):
+                {(!loading & !error.global) ?
+                (<ReadingDisplayForm readings={readings}/>):
                 (<h3>loading</h3>)
                 }
             </BorderDiv>
