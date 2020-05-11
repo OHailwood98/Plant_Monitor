@@ -33,6 +33,11 @@ function TopNavBar({ isAuthed, username, logout }) {
         </Nav.Item>
         {isAuthed ? 
         (<Nav.Item>
+          <Nav.Link href="/readings">Readings</Nav.Link>
+        </Nav.Item>)
+        :(null)}
+        {isAuthed ? 
+        (<Nav.Item>
           <Nav.Link href="/mydevices">My Devices</Nav.Link>
         </Nav.Item>)
         :(null)}
