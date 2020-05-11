@@ -2,9 +2,13 @@ import React from "react";
 import Styled from "styled-components";
 
 import api from "../../api"
-import DevicesForm from "../forms/DevicesForm"
-class MyDevicesPage extends React.Component {
+import ActionForm from "../forms/ActionForm"
 
+const CenterDiv = Styled.div`
+    text-align: center;
+`;
+
+class ActionPage extends React.Component{
     constructor(){
         super()
         this.state = {
@@ -21,20 +25,15 @@ class MyDevicesPage extends React.Component {
     }
 
     render(){
-        const CenterDiv = Styled.div`
-            text-align: center;
-        `;
-
         return(
             <CenterDiv>
                 <br/>
-                <h2>My Devices Page</h2>
+                <h2>Device Action Page</h2>
                 <br/>
-                {!this.state.loading ? (<DevicesForm devices={this.state.devices}/>) : (null)}
+                {!this.state.loading ? (<ActionForm devices={this.state.devices}/>) : (null)}
             </CenterDiv>
         )
     }
-
 }
 
-export default MyDevicesPage
+export default ActionPage

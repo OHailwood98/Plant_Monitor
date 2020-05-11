@@ -25,6 +25,8 @@ export default {
       axios.post("api/device/editdevice", {device}).then(res  => res.data),
     addDevice: device =>
       axios.post("api/device/adddevice", {device}).then(res  => res.data),
+    water: id =>
+      axios.post("api/device/water", {id}).then(res  => res.data), 
   },
   reading:{
     getOneDay: id =>
@@ -33,5 +35,7 @@ export default {
       axios.post("api/reading/getoneweek", {id}).then(res  => res.data.timeList),
     getOneMonth: id =>
       axios.post("api/reading/getonemonth", {id}).then(res  => res.data.timeList),
+    getMostRecent: id =>
+      axios.post("api/reading/getmostrecent", {id}).then(res  => res.data.recentTime),
   }
 };
