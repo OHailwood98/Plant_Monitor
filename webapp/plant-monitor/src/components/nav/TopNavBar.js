@@ -41,6 +41,11 @@ function TopNavBar({ isAuthed, username, logout }) {
           <Nav.Link href="/mydevices">My Devices</Nav.Link>
         </Nav.Item>)
         :(null)}
+        {isAuthed ? 
+        (<Nav.Item>
+          <Nav.Link href="/actions">Actions</Nav.Link>
+        </Nav.Item>)
+        :(null)}
       </Nav>
       <Dropdown alignRight className="ml-auto">
         {isAuthed ? (

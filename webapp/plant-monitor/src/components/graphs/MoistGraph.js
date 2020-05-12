@@ -54,7 +54,7 @@ function MoistGraph(readings){
             margin={{top: 5, right: 30, left: 20, bottom: 5}}>
                 <CartesianGrid strokeDasharray="3 3"/>
                 <XAxis dataKey="time" tickFormatter={tickFormatter}/>
-                <YAxis/>
+                <YAxis domain={[0, 100]}/>
                 <Tooltip content={<CustomTooltip/>}/>
                 <Bar dataKey="moisture" fill="#8884d8"/>
             </BarChart>
